@@ -41,12 +41,14 @@ const getWeatherTool = tool(getWeather, {
   name: "getWeather",
   description: `
     Get current weather info for any location.
+    If not asked for long description, return a short concise description.
     The user may make a mistake in the location name, so be sure to check if the location is valid. Try to correct it if possible. Take the closest match if the location is not found.
     Example location names:
     - Dahka --> Call with Dhaka
     - Newyork --> Call with New York
     - Barishal --> Call with Barisal
     - Dhaka, Bangladesh --> Call with Dhaka
+    If no location is provided, take the last location from the conversation.
     Use this to answer any question involving temperature, rain, snow, heat, cold, umbrella needs, storms, or general weather condition. 
     Example questions:
     - Will it rain today in Dhaka?
@@ -66,7 +68,13 @@ export const agent = createReactAgent({
   Get the weather information from the tool call and process it accordingly.
 Only answer questions related to weather. 
 If location is missing, ask the user for it. 
-If the question is not weather-related, say: "Sorry, I can't answer that."`,
+If the question is not weather-related, say: "Sorry, I can't answer that."
+Example questions:
+- What is the weather like in Dhaka? --> Answer
+- What is 7*10? --> Sorry, I can't answer that.
+- Who is the president of the USA? --> Sorry, I can't answer that.
+  - What is the capital of Bangladesh? --> Sorry, I can't answer that.
+  - What is the weather like in the capital of Bangladesh? --> Answer`,
   checkpointSaver,
 });
 
